@@ -1,0 +1,72 @@
+<HTML>
+<BODY>
+<h3>
+Homework 6: Automated Teller Machine<br>
+<br>
+Objective:<br> 
+-Develop the back end of a distributed Automated Teller Machine (ATM) system using basic Java networking.<br>
+-Add threading and synchronization to your distributed (socket-based) Automated Teller Machine (ATM).<br>
+-Write JUnit test classes for the principal ATM classes.<br>
+-Build.xml that will drive the tool ant to build the application, create its jar file and run the JUnit tests.<br>
+</h3> 
+<h3>Brief description</h3>
+<p1>
+Revisiting the socket-based implementation of the Automated Teller Machine that was developed in Homework 4.<br>
+<br>
+Homework 4 had a major issue that is transparently solved by RMI. With your implementation of the ATM only one client transaction can run 
+against the server at any given time.<br>
+<br>
+If the world's web and application servers were running under similar restrictions the world's the world would be a very serial place, 
+every computer request waiting in line, blocked by those made ahead of them.<br>
+<br>
+Software gets around this problem by implementing processing concurrency in the form of threading.<br>
+<br>In Java, a thread is defined as a sequential flow of control within a program.<br>
+<br>Concurrency is achieved when you have multiple threads running at the same time, each thread performing a different task within the 
+same program.<br>
+<br>
+RMI provides concurrency by running each remote method in a different thread.<br>
+<br> 
+In this way, multiple clients can be executing remote methods at the same time in the same server, each remote method executing essentially in parallel.<br>
+<br>
+We will be adding a level of concurrency to your ATM implementation from Homework 4.<br>
+<br>
+<h3>Assumptions.</h3>
+<p1>
+This assignment does not require that you provided a completely concurrent solution.<br>
+1. We will only be running a single client.<br>
+2. Our Server will likely only facilitate one client connection at a time.<br>
+<br> 
+<h3>Functional Requirements</h3>
+<p1>
+The ATM will simulate a real world automated teller machine.<br>
+The ATM must support a variety of accounts.<br>
+The ATM must support the following operations:<br>
+<br>
+    1. deposit: add some dollar amount to account balance<br>
+<br>
+    2. withdrawal: deduct some dollar amount from account balance<br>
+<br>
+    3. balance inquiry: get current account balance<br>
+<br><br>
+<h3>Design/Architecture</h3>
+<p1>
+The ATM will simulate a real world automated teller machine that supports safe access to accounts from multiple concurrent clients.
+<br>
+We are required to add concurrency (multi-threading) and synchronization to the (single-threaded) socket-based Automated Teller Machine 
+(ATM) you produced for Homework 4.
+<br>
+The ATM will be hosted in its own JVM, distinct from the client JVM. The client will connect to the server using Java networking and 
+communicate with the server using your protocol. The major enhancements to your HW4 code include the following:<br>
+<br>
+	1. In the server each method which operates on your account (deposit, withdraw, get balance) will be executed in a separate thread.<br>
+		The server keeps a pool of Threads for this purpose.<br>
+<br>
+	2. Because the threads will have concurrent access to the same Account object, we must insure that it is protected from data corruption. 
+		To do this you will add synchronization points to the code that modifies your Account to prevent multiple threads from interweaving 
+		the execution of modification operations.<br>
+<br>
+As with homework 4, the ATM need only support one Account object.<br>
+<br>
+The ATM will run in its own process and will handle remote requests from a client running in some other process.<br><br>
+</p1>
+</BODY></HTML>

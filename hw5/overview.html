@@ -1,0 +1,78 @@
+<HTML>
+<BODY>
+<h3>
+Homework 5: Automated Teller Machine<br>
+<br>
+Objective:<br> 
+-Develop distributed Automated Teller Machine (ATM) using Java Remote Method Invocation (RMI).<br>
+-Write JUnit test classes for the principal ATM classes.<br>
+-Build.xml that will drive the tool ant to build the application, create its jar file and run the JUnit tests.<br>
+</h3> 
+<h3>Brief description</h3>
+<p1>
+Developing the distributed Automated Teller Machine (ATM) using Java's Remote Method Invocation (RMI) from the principals from the socket based ATM..<br>
+<br> 
+<h3>Functional Requirements</h3>
+The ATM will simulate a real world automated teller machine.<br>
+The ATM must support a variety of accounts.<br>
+The ATM must support the following operations:<br>
+<br>
+    1. deposit: add some dollar amount to account balance<br>
+<br>
+    2. withdrawal: deduct some dollar amount from account balance<br>
+<br>
+    3. balance inquiry: get current account balance<br>
+<br><br>
+
+The ATM will run in its own process and will handle remote requests from a client running in some other process.<br><br>
+
+<h3>Design</h3>
+<p1>
+Defined is an ATM interface that will be implemented by both the real ATM and a client side proxy for the ATM, called a stub. 
+The client will use a stub that will proxy all the operations of the ATM and delegate them an implementation object on the server. 
+This time, there is no need to generate the stub classes with the rmi compiler. javac, the Java compiler, is the only compiler that is 
+run because the stubs are generated for at runtime.<br>
+<br>
+The ATM includes several individual Accounts and each of the ATM methods includes a parameter that allows the account number to be specified. 
+For simplicity we'll assume the account identifier type is int.<br>
+<br>
+One of the challanges of distributed computing is connecting a client to the first remote object. Once the first object reference is obtained 
+it can be used to gain access to other remote components. In fact it might be a good idea if the entire job of this first object we connect 
+to should be providing references to other objects. This design is so common it has been detailed as a common design pattern called factory. 
+A factory is a remote object whose main job is to provide references to other remote objects, i.e. it is a navigational starting point to find 
+our way around objects on the server side. In this system, you will create an ATM factory that the client will use to get a reference to a 
+remote ATM.<br>
+<br>
+The ATM factory is a server side object with a remote interface just like the ATM. You will create an ATMFactory interface that has a single 
+method getATM() that returns a remote reference to the serverside ATM instance.<br>
+<br>
+Changes are made to the ATM interface to make it RMI–ready, including extending java.rmi.Remote and declaring the methods throws 
+RemoteException. Additionally, to register the implementation objects, ATMImpl and ATMFactoryImpl, with the RMI subystem to receive requests, 
+will need to "export" them via java.rmi.server.UnicastRemoteObject. In less formal terms this means that the implementation classes must build 
+on the services provided by this special class by defining your classes to inherit from it.<br>
+<br>
+The server process will start up, create an ATMFactoryImpl instance, and then register it with the RMI naming service or registry using 
+java.rmi.Naming. The client will then be able to lookup the ATM factory and connect to it. Then the client will use the getATM() method of the 
+factory to get a remote reference to an ATM instance.<br>
+<br>
+<h3>Architecture</h3>
+<p1>
+The following diagram illustrates how a factory can be used in bootstrapping a remote application. In the diagram only two ATM instances are 
+shown, but imagine a real banking system with hundreds of ATMs. The factory is aware of the remote locations of each ATM instance and can 
+provide any one reference to a client application. Without the factory, all of the ATM instances would need to be registered in the 
+RMI registry and the client would need to know a unique name for each ATM instance. In this case a factory is extremely useful.<br>
+<br>
+<img src="hw5factory.gif" align="center" height="450" width="400">
+<br><br>
+And the following diagram show how the RMI stubs dispatch method calls to remote implementation objects. 
+[Note: the server-side proxy, ATM_Skel, has been deprecated and is no longer part of the model.]<br>
+<br>
+<img src="hw5atm.gif" align="center" height="300" width="550">
+<br><br>
+The following diagram shows the entire flow from the clients perspective. First the client looks up the ATMFactory in the RMI registry. 
+Once it has the factory it can call getATM() to get a reference an actual ATM. And once it has a reference to an ATM it can call methods on it.<br>
+<br>
+<img src="hw5flow.gif" align="center" height="400" width="550">
+<br><br>
+</p1>
+</BODY></HTML>

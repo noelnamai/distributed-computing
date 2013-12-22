@@ -1,0 +1,60 @@
+<HTML>
+<BODY>
+<h3>
+Homework 4: Automated Teller Machine<br>
+<br>
+Objective:<br> 
+-Develop the back end of a distributed Automated Teller Machine (ATM) system using basic Java networking.<br>
+-Write JUnit test classes for the principal ATM classes.<br>
+-Build.xml that will drive the tool ant to build the application, create its jar file and run the JUnit tests.<br>
+</h3> 
+
+<h3>Brief description</h3>
+<p1>
+Developing a distributed Automated Teller Machine (ATM). The ATM will be hosted in a different process than the client application. The client will connect to the server using Java networking and communicate with the server using a protocol  defined. Also using Java interfaces to add some sophistication to your remote invocations.<br>
+<br> 
+<h3>Functional Requirements</h3>
+The ATM will simulate a real world automated teller machine.<br>
+The ATM must support the following operations:<br>
+<br>
+    1. deposit: add some dollar amount to account balance<br>
+<br>
+    2. withdrawal: deduct some dollar amount from account balance<br>
+<br>
+    3. balance inquiry: get current account balance<br>
+<br>
+(For now) The ATM need only supports one account and the balance for that one account.<br><br>
+
+The ATM will run in its own process and will handle remote requests from a client over a socket connection (clients get an java.net.Socket) running in some other process.<br><br>
+
+<h3>Design</h3>
+<p1>
+In the ATM system, the client and ATM will be running in different processes. Since the client cannot reference memory in the server process, it cannot get an actual reference to the real ATM object running on the server. Instead the client will use a proxy that presents all the behavior that characterizes an ATM. In fact, the client doesn't even need to know if the actual ATM is local or remote. This is achieved using a Java interface.<br>
+<br>
+Creating an ATM interface:<br>
+<br>
+   public interface ATM<br> 
+<br>
+This interface will be implemented on both client and server sides of this distributed application.<br>
+<br>
+On the server side will be an ATMImplementation class that you will created, implementing this interface:<br>
+<br>
+   public class ATMImplementation implements ATM<br> 
+<br>
+This is the actual ATM that has a reference to an instance of a class Account and manipulates its balance. An instance of ATMImplementation will run on the server.<br>
+<br>
+Unfortunately, the client won't be able to directly reference this object. So we create a client proxy, ATMProxy, that also implements the ATM interface:<br>
+<br>
+   public class ATMProxy implements ATM<br> 
+<br>
+The implementation of the interface methods in ATMProxy won't actually manipulate any Account data. Instead, the proxy will connect to the server running the real ATM and for each call it will send a message over the network requesting that the server perform the work.<br>
+<br>
+The server process will start up, create an ATMImplementation instance, and then open a socket and wait for incoming requests. When a request arrives the server will dispatch to the appropriate ATMImplementation method and reply if necessary.<br>
+<br>
+<h3>Architecture</h3>
+<p1>
+The following diagram illustrates how the client operates on an ATM which is actually an ATMProxy that communicates over the network to the server and dispatches the call to the ATMImplementation.<br>
+<br>
+<img src="hw4.gif" align="center" height="250" width="500">
+</p1>
+</BODY></HTML>

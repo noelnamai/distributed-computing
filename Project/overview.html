@@ -1,0 +1,95 @@
+<HTML>
+<BODY>
+<h3>
+Final Project: Distributed Banking System<br>
+<br>
+Objective:<br> 
+Develop a distributed banking system using either Java Remote Method Invocation (RMI) or Java IDL (CORBA) as your transport.<br>
+</h3> 
+<h3>Functional Requirements</h3>
+<p1>
+Enhancing the Automated Teller Machine (ATM) to create a complete banking system.<br>
+<br>
+The banking system consists of an ATM, a Bank, Accounts and a Security service.<br>
+<br>
+The ATM will support the following operations:<br>
+<br>
+	1. Deposit: add some dollar amount to a specified account's balance<br>
+<br>
+	2. Withdrawal: deduct some dollar amount from a specified account's balance<br>
+<br>
+	3. Balance inquiry: get current balance of a specified account<br>
+<br>
+	4. Transfer: deduct some dollar amount from a specified account and deposit that amount into another specified account.<br>
+<br>
+If there are not enough funds in the specified account to complete the operation an error is generated.<br>
+<br>
+The ATM will authenticate each client request and authorize the operation using the Security service. The ATM will generate an error if the 
+authentication or authorization fail.<br>
+<br>
+The Bank will manage various Accounts and will provide the ATM access to those Accounts.<br>
+<br>
+Each Account will provide methods for modifying the Account's balance. If a modification cannot be processed due to insufficient funds the
+Account will generate an error.<br>
+<br>
+<h3>Assumptions.</h3>
+<p1>
+This project does not require that you provided a completely concurrent solution.<br>
+<br>
+1. We will only be running a single client.<br>
+<br>
+2. Our Server will likely only facilitate one client connection at a time.<br>
+<br>
+<h3>Design</h3>
+<p1>
+There will be two distinct server processes in the system. The first process will host the remote ATMFactory and ATM instances, as before. 
+The second process will host a remote Security service and a remote Bank.<br>
+<br>
+As before, the client will use the ATMFactory to obtain a remote ATM instance.<br>
+<br>
+The first action a Client will take will be to register itself with the ATM as an ATMListener. The listener interface will have a method to 
+receive a TransactionNotification. Whenever the ATM receives a transaction request, the first thing it will do is notify each of its listeners 
+with a TransactionNotification indicating that it is about to process the operation. This will let the Client know that the ATM is coordinating 
+with the Security service and the Bank to handle the transaction.<br>
+<br>
+Now, instead of a simple integer account number, each ATM operation will require a complex AccountInfo object as a parameter. AccountInfo will 
+include an account number and a personal identification number (PIN).<br>
+<br>
+The ATM will authenticate the account information and authorize the operation using the remote Security service. If the authentication or 
+authorization fail, the operation will throw a security exception.<br>
+<br>
+If successfully authenticated and authorized, the ATM will perform the operation on the Account specified in the AccountInfo. But the ATM will 
+not longer have local Account instances. Unlike the design of the previous homework, now the Account objects are to reside in a central Bank. 
+The ATM will get a remote reference to the Account hosted in the Bank process.<br>
+<br>
+If the remote Account does not have enough funds to process the operation an insufficient funds exception is generated. Otherwise the Account is 
+updated appropriately by the ATM.<br>
+<br>
+Each ATM will maintain its own cash balance, representing the cash on hand. Whenever the ATM processes a withdrawal it will debit its own cash 
+balance by the amount of the withdrawl. Whenever a withdrawal is attempted the ATM must verify the it has enough cash on hand to service the 
+request. If insufficient cash is available in the ATM it will generate an exception.<br>
+<br>
+<h3>Architecture</h3>
+<p1>
+The system includes the following remote components:<br>
+<br>
+1. ATMFactory<br>
+<br>
+2. ATM<br>
+<br>
+3. Bank<br>
+<br>
+4. Account<br>
+<br>
+5. Security<br>
+<br>
+6. Client (as an ATMListener)<br>
+<br>
+The system includes the following structures that are passed by value:<br>
+<br>
+1. AccountInfo<br>
+<br>
+2. TransactionNotification<br>
+<br>
+</p1>
+</BODY></HTML>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="FINAL PROJECT" default="main" basedir=".">
+    <description>
+            Build file for FINAL PROJECT
+    </description>
+        <!-- -->
+        <!-- Properties file for overriding built-in values -->
+        <property file="build.properties"/>
+        <!-- Directory containing compiled classes -->
+        <property name="class.dir" location="./" />
+        <!-- Directory containing source files -->
+        <property name="src.dir" location="./" />
+        <!-- Directory containing generated javadoc -->
+        <property name="javadoc.dir" location="./javadoc" />
+        <!-- Directory to put the exported JAR file -->
+        <property name="export.dir" location="./" />
+		<!-- Run JUnit tests -->
+	    <property name="junit.dir" location="./" />
+        <!-- Location of the exported JAR file -->
+        <property name="export.jar" location="${export.dir}/FINALPROJECT.jar" />
+
+        <!-- An ant target that combines these jobs to clean out all .class files, compile all the sources, and build the jar file. -->
+        <target name="main" 
+                description="Rebuild and package project" 
+                depends = "clean,compile,javadoc,export,junit"/>
+
+        <!-- Remove all compiled class files and Javadoc directory -->
+        <target name="class.clean" description="Remove class files">
+                <delete dir="${class.dir}" includes="**/*.class" />
+        </target>
+
+        <target name="javadoc.clean" description="Remove Javadoc">
+                <delete dir="${javadoc.dir}"/>
+        </target>
+
+        <target name="clean" depends="class.clean,javadoc.clean" 
+                description="Remove all built artifacts">
+                <delete file="${export.jar}"/>
+        </target>
+
+        <!-- Compile all the Java source code in the application and put the resulting class files in a different directory  -->
+        <target name="class.compile" description="Build Java">
+                <mkdir dir="${class.dir}"/>
+                <javac srcdir="${src.dir}" destdir="${class.dir}" includeantruntime="false" />
+        </target>
+	
+		<target name="test.compile" depends="class.compile" description="Build Tests">
+				<javac srcdir="${test.dir}" destdir="${class.dir}" includeantruntime="false" />
+	    </target>	
+	
+		<target name="compile" depends="class.compile,test.compile" 
+	                description="Remove all built artifacts">
+	                <delete file="${export.jar}"/>
+	    </target>
+
+        <!-- Generate JavaDoc -->
+        <target name="javadoc" description="Generate Javadoc">
+                <javadoc sourcepath="${src.dir}" destdir="${javadoc.dir}" 
+                		overview="overview.html"
+                        access="private" author="true" nodeprecated="false" 
+                        nodeprecatedlist="false" noindex="false" 
+                        nonavbar="false" notree="false"
+                        source="1.7" splitindex="true" 
+                        use="true" version="true">
+                </javadoc>
+        </target>
+
+        <!-- Build a jar file  -->
+        <target name="export" description="Export files to a JAR">
+                <fail message="export.dir not set" unless="export.dir"/>
+                <fail message="export.jar not set" unless="export.jar"/>
+                <mkdir dir="${export.dir}"/>
+                <jar destfile="${export.jar}">
+                    <fileset dir="${src.dir}/.." includes="${src.dir}/**/*"/>
+                    <fileset dir="${class.dir}/.." excludes="${class.dir}/cscie160/Project/*Test*.class" includes="${class.dir}/**/*"/>
+                    <fileset dir="${javadoc.dir}/.." includes="${javadoc.dir}/**/*"/>
+                	<fileset dir="." includes="test/**/*"/>
+                    <fileset dir="." includes="build.xml"/>
+                	<fileset dir="." includes="*.properties"/>
+                	<fileset dir="." includes="*.html"/>
+                </jar>
+        </target>
+
+		<!-- Start BankServer. -->
+		<target name="BankServer">
+	  		<java classname="cscie160.project.BankServer" classpath="${class.dir}">  
+	  		</java>
+	  	</target>
+	
+		<!-- Start ATMServer. -->
+		<target name="ATMServer" depends="BankServer">
+		  	<java classname="cscie160.project.ATMServer" classpath="${class.dir}">  
+		  	</java>
+		</target>
+	
+        <!-- Run JUnit. -->
+        <target name="junit" description="Run JUnit" depends="ATMServer">
+                <junit printsummary="false" showoutput="true">
+                        <classpath>
+                                <pathelement location="${class.dir}"/>
+                                <pathelement path="${java.class.path}"/>
+                        </classpath>
+                        <test 
+                        	name="cscie160.project.AllTest">
+                        </test>
+                        <formatter type="plain" usefile="false"/>
+                        <formatter type="plain" usefile="true"/>
+                </junit>
+        </target>
+</project>
