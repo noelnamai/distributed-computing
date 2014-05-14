@@ -76,6 +76,7 @@ Current Floor: 2
 Stopping on floor 3
 Currently 0 passengers onboard
 Current Floor: 3
+```
 
 ##Assumptions
 
