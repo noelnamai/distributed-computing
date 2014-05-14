@@ -1,4 +1,4 @@
-#Homework 4: Automated Teller Machine
+#Automated Teller Machine
 
 ##Objective: 
 
