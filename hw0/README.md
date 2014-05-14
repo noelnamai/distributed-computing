@@ -1,4 +1,4 @@
-#Homework 0: Jump Start
+#Jump Start
 
 ##Objective: 
 
