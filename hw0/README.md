@@ -13,7 +13,7 @@ Java Tutorial: First Cup of Java
 Classes
 In Java almost nothing happens outside of class definitions. There are no stand alone functions, no global variables defined outside the scope of a class. Thus, the simplest Hello World program consists of a class, with a method named main in which appears a statement that uses standard output to write the message "Hello, World!". The main must be declared with a certain signature. Here is the entire program:
 
-```
+```Java
 //File HelloWorld.java
 public class HelloWorld
 {
