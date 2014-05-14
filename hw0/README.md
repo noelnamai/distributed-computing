@@ -1,9 +1,5 @@
 #Homework 0: Jump Start
 
-Grading: Self-graded, do not submit, not included in final grade.
-
-Last Modified: 07/12/2010 03:26:45
-
 ##Objective: 
 
 To establish your computing environment and get started with Java.
