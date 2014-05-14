@@ -1,12 +1,22 @@
-###Objective: 
+#Homework 2: Floors, Exceptions
+
+Due: Mon Feb 24th
+Grading: 10%
+
+Last Modified: 02/09/2014 18:21:44
+
+##Objective: 
 
 Add floors to the elevator system and begin using exceptions to handle error conditions.
 
-###Resources:
+##Resources:
 
-Exceptions
-Unit Testing with JUnit href="http://java.sun.com/docs/books/tutorial/java/javaOO/classes.html">Classes
-Java tutorial
+* Exceptions
+* Unit Testing with JUnit href="http://java.sun.com/docs/books/tutorial/java/javaOO/classes.html">Classes
+* Java tutorial
+
+--------------------
+
 Migrate your classes into the package cscie55.hw2.
 Define and implement a class Floor to represent a floor that the Elevator will visit. When the Elevator is initialized it should create an array of the Floors in the building. (Again, you may assume 7 floors in the building)
 Endow each Floor with a data member indicating how many passengers are waiting on the Floor to board the Elevator. For now, this can simply be a numeric count of the number of passengers queued up.
