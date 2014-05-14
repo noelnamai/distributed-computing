@@ -1,6 +1,8 @@
 #Homework 4: Automated Teller Machine
 
-##Objective: Develop the back end of a distributed Automated Teller Machine (ATM) system using basic Java networking. Then write JUnit test classes for the principal ATM classes, and a build.xml that will drive the tool ant to build the application, create its jar file and run the JUnit tests.
+##Objective: 
+
+Develop the back end of a distributed Automated Teller Machine (ATM) system using basic Java networking. Then write JUnit test classes for the principal ATM classes, and a build.xml that will drive the tool ant to build the application, create its jar file and run the JUnit tests.
 
 ##Resources:
 
@@ -19,50 +21,57 @@
 
 You will be developing a distributed Automated Teller Machine (ATM). The ATM will be hosted in a different process than the client application. The client will connect to the server using Java networking and communicate with the server using a protocol you will define. You will also use Java interfaces to add some sophistication to your remote invocations.
 
-##Functional Requirements
+###Functional Requirements
 
 The ATM will simulate a real world automated teller machine.
 
 The ATM must support the following operations:
 
-** deposit: add some dollar amount to account balance
+* deposit: add some dollar amount to account balance
 
-** withdrawal: deduct some dollar amount from account balance
+* withdrawal: deduct some dollar amount from account balance
 
-** balance inquiry: get current account balance
+* balance inquiry: get current account balance
 
 (For now) The ATM need only support one account and the balance for that one account.
 
 The ATM will run in its own process and will handle remote requests from a client over a socket connection (clients get an java.net.Socket) running in some other process.
 
-Design
+###Design
 
 In the ATM system, the client and ATM will be running in different processes. Since the client cannot reference memory in the server process, it cannot get an actual reference to the real ATM object running on the server. Instead the client will use a proxy that presents all the behavior that characterizes an ATM. In fact, the client doesn't even need to know if the actual ATM is local or remote. This is achieved using a Java interface.
 
 Create an ATM interface:
 
-   public interface ATM 
+```Java
+public interface ATM 
+```
+
 This interface will be implemented on both client and server sides of this distributed application.
 
 On the server side will be an ATMImplementation class that you will created, implementing this interface:
 
-   public class ATMImplementation implements ATM 
+```Java
+public class ATMImplementation implements ATM 
+```
+
 This is the actual ATM that has a reference to an instance of a class Account and manipulates its balance. An instance of ATMImplementation will run on the server.
 
 Unfortunately, the client won't be able to directly reference this object. So create a client proxy, ATMProxy, that also implements the ATM interface:
 
-   public class ATMProxy implements ATM 
+```Java
+public class ATMProxy implements ATM 
+```
+
 The implementation of the interface methods in ATMProxy won't actually manipulate any Account data. Instead, the proxy will connect to the server running the real ATM and for each call it will send a message over the network requesting that the server perform the work.
 
 The server process will start up, create an ATMImplementation instance, and then open a socket and wait for incoming requests. When a request arrives the server will dispatch to the appropriate ATMImplementation method and reply if necessary.
 
-Architecture
+###Architecture
 
 The following diagram illustrates how the client operates on an ATM which is actually an ATMProxy that communicates over the network to the server and dispatches the call to the ATMImplementation.
 
-
-
-Assignment
+##Assignment
 
 [Portions of the requirements that appear in this blue font are supplied in a file you can download from this link: hw4.jar]
 All classes should be in the package:
