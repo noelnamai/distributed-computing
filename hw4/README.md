@@ -71,7 +71,9 @@ The server process will start up, create an ATMImplementation instance, and then
 
 The following diagram illustrates how the client operates on an ATM which is actually an ATMProxy that communicates over the network to the server and dispatches the call to the ATMImplementation.
 
+```
 http://courses.dce.harvard.edu/~cscie55/hw4.gif
+```
 
 ##Assignment
 
