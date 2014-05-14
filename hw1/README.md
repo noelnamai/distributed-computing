@@ -1,10 +1,5 @@
 #Homework 1: Elevator Simulation
 
-Due: Due: Monday, Feb 10th 
-Grading: 10%
-
-Last Modified: 01/04/2014 20:55:59
-
 ##Objective: 
 
 Interpret a software specification and develop your first Java class.
