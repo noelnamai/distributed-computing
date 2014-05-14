@@ -71,37 +71,51 @@ The server process will start up, create an ATMImplementation instance, and then
 
 The following diagram illustrates how the client operates on an ATM which is actually an ATMProxy that communicates over the network to the server and dispatches the call to the ATMImplementation.
 
+http://courses.dce.harvard.edu/~cscie55/hw4.gif
+
 ##Assignment
 
 [Portions of the requirements that appear in this blue font are supplied in a file you can download from this link: hw4.jar]
 All classes should be in the package:
 
-   cscie55.hw4
-ATM
+```
+cscie55.hw4 
+```
+
+####ATM
 
 Create the following ATM interface:
 
-   public interface ATM {
-      public void deposit(float amount) throws ATMException;
-      public void withdraw(float amount) throws ATMException;
-      public Float getBalance() throws ATMException;
-   }
-ATMImplementation
+```Java
+public interface ATM {
+   public void deposit(float amount) throws ATMException;
+   public void withdraw(float amount) throws ATMException;
+   public Float getBalance() throws ATMException;
+}
+```
+
+####ATMImplementation
 
 Develop a class ATMImplementation that implements the ATM interface. For now the ATMImplementation can have just one Account. All transactions on the ATM act on the balance of that Account.
 
-  public class ATMImplementation implements ATM
-Account
+```
+public class ATMImplementation implements ATM
+```
+
+####Account
 
 The class Account should be the bare minimum needed to hold the state information that models a bank account. In fact, it need only be a wrapper around an appropriate primitive type that represents the balance in the account. The constructor for ATMImplementation should create an Account object using the default constructor and store a reference to it.
 
-ATMProxy
+####ATMProxy
 
 Now, the client wants to make calls on the ATM, perhaps withdrawing some money or checking the balance, but, the client can't actually get a reference to the ATMImplementation. Instead it will operate on an ATMProxy that implements the ATM interface. As far as the client is concerned, the instance is an ATM. It doesn't care that the ATMProxy actually connects to a remote server process and delegates the ATM methods to the remote ATMImplementation.
 
 Develop an ATMProxy class that implements the ATM interface.
 
-   public class ATMProxy implements ATM 
+```
+public class ATMProxy implements ATM 
+```
+
 The proxy doesn't actually hold any account data as part of its state. It simply dispatches each method of the ATM interface to the remote ATMImplementation. The proxy will need to make a socket connection to the server process described below. Once a socket connection is made, the proxy gets the input and output streams from the socket. To send a message to the server, the proxy writes outgoing requests to the output stream. You may want to wrap the basic outbound stream with a convenience wrapper stream like java.io.PrintWriter. Similarly, the proxy reads incoming responses from the input stream which may also be wrapped in another stream like java.io.BufferedReader.
 
 To communicate with the server you will need to define a protocol, like the one used by the SimpleClient and the SimpleServer. The protocol enables the proxy to tell the server what it wants the server to do. And while the server is processing that request the proxy must wait for that response. Consider a simple String based protocol that includes the method to be executed and some String representation of any parameters for that method. Then have the proxy write the String messages directly onto the output stream obtained from the socket.
