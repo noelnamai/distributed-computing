@@ -1,10 +1,5 @@
 #Homework 2: Floors, Exceptions
 
-Due: Mon Feb 24th
-Grading: 10%
-
-Last Modified: 02/09/2014 18:21:44
-
 ##Objective: 
 
 Add floors to the elevator system and begin using exceptions to handle error conditions.
