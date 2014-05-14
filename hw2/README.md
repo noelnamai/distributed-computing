@@ -1,4 +1,4 @@
-#Homework 2: Floors, Exceptions
+#Floors, Exceptions
 
 ##Objective: 
 
