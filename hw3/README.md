@@ -1,4 +1,4 @@
-#Homework 3: Active Passengers, Collections
+#Active Passengers, Collections
 
 Objective: Add passengers to the elevator system and leverage Java collections.
 
