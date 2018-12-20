@@ -1,10 +1,10 @@
-#Floors, Exceptions
+# Floors, Exceptions
 
-##Objective: 
+## Objective: 
 
 Add floors to the elevator system and begin using exceptions to handle error conditions.
 
-##Resources:
+## Resources:
 
 * Exceptions
 * Unit Testing with JUnit href="http://java.sun.com/docs/books/tutorial/java/javaOO/classes.html">Classes
@@ -33,10 +33,8 @@ Demonstrate the new features of your elevator system by implementing a main that
 4. Run the Elevator up and down collecting passengers and delivering them to the ground floor.
 5. Show the Elevator and its Floors successfully collaborating. In other words as the program runs it should show the Elevator unloading passengers to the Floor and the Floor boarding passengers onto the Elevator. [Here, "showing" means nothing more than simple print statements on standard output.]
 
-##Design Considerations
+## Design Considerations
 
 Consider the final state of an Elevator after it has stopped at a Floor. What happens to its record of destinations? This depends on whether all passengers waiting on the Floor successfully boarded the Elevator. If that is true, then the floor number can be removed from the Elevator's destination record. If that was not the case, then the Elevator must come back for the passengers who were stranded–otherwise they'd be stranded there until the Elevator happens to stop there again to discharge passengers. Who is to know if they all got on board? The Floor is the only agency in a position to know this. Thus, either we make it the job of the Floor to clear the destination in the Elevator, or it must contrive to tell the Elevator "you don't have to return here, your job is done."
 
 There is bug lurking in the woodpile here. If the Elevator can not take all waiting passengers and if, as a result, the floor number is not cleared from the list of destinations, the Elevator may never leave the floor. Instead it may go into an infinite loop asking itself "Am I at a floor? Yes. Is it a destination? Yes. Then stop." Each time it stops, it is unable to load waiting passengers, and, still leaving some behind, it will fail to clear the floor number from its destinations and never move on.
-
- 
