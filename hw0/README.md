@@ -1,10 +1,10 @@
-#Jump Start
+# Jump Start
 
-##Objective: 
+## Objective: 
 
 To establish your computing environment and get started with Java.
 
-##Resources:
+## Resources:
 
 * Java tutorial
 * Java Tutorial: First Cup of Java
@@ -39,14 +39,14 @@ c:\javadist> java HelloWorld
 
 When we start the JVM, supplying a class as an argument, the JVM loads that class and looks for a main method with our special signature. This is a convention codified by the Java Language Standard.
 
-##Exercise # 1. 
+## Exercise # 1. 
 
 Use a plain text editor, like notepad or emacs, to write the minimal HelloWorld program, compile it and run it, using only javac and java supplied with the Java Developers Kit (JDK). If you are using an IDE like eclipse or Idea, repeat the exercise, making a project in the IDE and building and running the program.
 
 Trouble shooting. You compiled your file and you call Java but the Java Virtual Machine bails out with a message about failing to find your class. This is a common error and derives from the way in which the JVM finds classes. When first encountered this is a frustrating problem. javac found my source file, why can't java find my class? you say. It is simply that the JVM locates classes according to an environment variable called CLASSPATH. The value of this variable is a series of directories in your file system. If you have this variable set, and if HelloWorld.class is in one of these directories, the JVM will readily find it, and if it is not, then the JVM will be clueless, even if it happens to be in the directory where you are running the java command. One remedy is to set the classpath, adding "dot", the current directory; another, which works in this case but not in general, is to unset classpath altogether.
 The following exercise calls for the use of packages, which are covered toward the end of UnitI. [See Packages in that web page.] Doing the next exercise means jumping ahead to a topic covered in the second lecture. You may find this part tough going, and if so, you could start Homework #1 and start without using packages. On the other hand, if you can complete this exercise you will have a very good leg up on the semester's study!
 
-##Exercise #2: 
+## Exercise #2: 
 
 Java classes may be grouped together in sets called packages. Packages provide scope as well as allowing you to organize your classes. In the core java class set there are several packages which contain classes that you will use reguarly including java.lang, java.util, and java.io. Put your HelloWorld class in the package cscie160.hw0 using the following package statement:
 
