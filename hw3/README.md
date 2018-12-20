@@ -1,8 +1,8 @@
-#Active Passengers, Collections
+# Active Passengers, Collections
 
 Objective: Add passengers to the elevator system and leverage Java collections.
 
-##Resources:
+## Resources:
 
 * Java Collections Overview
 * Collections Tutorial
@@ -13,7 +13,7 @@ Objective: Add passengers to the elevator system and leverage Java collections.
 * Migrate your classes into the package cscie55.hw3.
 * Define and implement a class Passenger to represent passengers in our simulation. A Passenger should know its current floor and have a destination floor in mind when waiting to board the elevator. Create the appropriate accessors and mutators for these data members.
 
-##Accessors and Mutators
+## Accessors and Mutators
 
 It is customary in object oriented programming to be very selective in exposing the underlying data model of a class. Instance variables are customarily made private. Those parts of the data model that are only for internal use are not exposed to the wider world in any way. Those instance variables that are of legitimate concern to other classes are accompanied by get methods to return the values of these variables. If objects of other classes might reasonably be entitled to change a state variable, then a set method is provided to support the setting of this variable. These methods are usually referred to as accesors and mutators or getters and setters.
 
@@ -29,7 +29,7 @@ You should adopt this convention in choosing names for your accessors and mutato
 
 * Update Floor to have three collections of Passengers, one for those merely resident (just hanging out on the floor, not queued for leaving), one for those queued for up service, and one those queued for down service.
 
-##Collections
+## Collections
 
 In the abstract a collection is a class that holds objects. Objects may be inserted into the collection, removed from the collection, and retreived from the collection by reference by some indexing or sequentially. An array is a type of collection. Java also provides some collection framework, consisting of interfaces and classes. Among the collections provided in Java 6 are    HashSet, ArrayList, and HashMap, and Hashtable among others. The Java documentation for every class is readily available if you have installed the JDK with documentation, or on the web Java 6 API Packages. From there you can navigate to any particular class such as java.util.ArrayList.
 
@@ -42,7 +42,7 @@ Each collection is different and determining which one is best to solve a partic
 * Make sure that your Elevator distinguishs between up	requests and down requests, stopping only when appropriate.
 * Endow your Passenger class with an arrive() method that is called when the Passenger reaches the destination floor. Make sure to update the Passenger's state upon arrival.
 
-###Demonstration
+### Demonstration
 
 Show the Elevator, its Floors, and the Passenger collections successfully collaborating. In other words as the program runs it should show the Elevator unloading Passengers to the Floor and the Floor boarding passengers onto the Elevator. [Here, "showing" means nothing more than simple print statements on standard output.]
 
