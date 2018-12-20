@@ -1,10 +1,10 @@
-#Automated Teller Machine
+# Automated Teller Machine
 
-##Objective: 
+## Objective: 
 
 Develop the back end of a distributed Automated Teller Machine (ATM) system using basic Java networking. Then write JUnit test classes for the principal ATM classes, and a build.xml that will drive the tool ant to build the application, create its jar file and run the JUnit tests.
 
-##Resources:
+## Resources:
 
 * Interfaces
 * Networking
@@ -12,7 +12,7 @@ Develop the back end of a distributed Automated Teller Machine (ATM) system usin
 * I/O
 * An overview of ant, the portable build utility.
 
-###Downloads:
+### Downloads:
 
 * Download ant
 * Download JUnit
@@ -21,7 +21,7 @@ Develop the back end of a distributed Automated Teller Machine (ATM) system usin
 
 You will be developing a distributed Automated Teller Machine (ATM). The ATM will be hosted in a different process than the client application. The client will connect to the server using Java networking and communicate with the server using a protocol you will define. You will also use Java interfaces to add some sophistication to your remote invocations.
 
-###Functional Requirements
+### Functional Requirements
 
 The ATM will simulate a real world automated teller machine.
 
@@ -37,7 +37,7 @@ The ATM must support the following operations:
 
 The ATM will run in its own process and will handle remote requests from a client over a socket connection (clients get an java.net.Socket) running in some other process.
 
-###Design
+### Design
 
 In the ATM system, the client and ATM will be running in different processes. Since the client cannot reference memory in the server process, it cannot get an actual reference to the real ATM object running on the server. Instead the client will use a proxy that presents all the behavior that characterizes an ATM. In fact, the client doesn't even need to know if the actual ATM is local or remote. This is achieved using a Java interface.
 
@@ -67,13 +67,13 @@ The implementation of the interface methods in ATMProxy won't actually manipulat
 
 The server process will start up, create an ATMImplementation instance, and then open a socket and wait for incoming requests. When a request arrives the server will dispatch to the appropriate ATMImplementation method and reply if necessary.
 
-###Architecture
+### Architecture
 
 The following diagram illustrates how the client operates on an ATM which is actually an ATMProxy that communicates over the network to the server and dispatches the call to the ATMImplementation.
 
 https://github.com/noelnamai/Distributed-Computing/blob/master/hw4/hw4.gif
 
-##Assignment
+## Assignment
 
 [Portions of the requirements that appear in this blue font are supplied in a file you can download from this link: hw4.jar]
 All classes should be in the package:
@@ -82,7 +82,7 @@ All classes should be in the package:
 cscie55.hw4 
 ```
 
-####ATM
+#### ATM
 
 Create the following ATM interface:
 
@@ -94,7 +94,7 @@ public interface ATM {
 }
 ```
 
-####ATMImplementation
+#### ATMImplementation
 
 Develop a class ATMImplementation that implements the ATM interface. For now the ATMImplementation can have just one Account. All transactions on the ATM act on the balance of that Account.
 
@@ -102,11 +102,11 @@ Develop a class ATMImplementation that implements the ATM interface. For now the
 public class ATMImplementation implements ATM
 ```
 
-####Account
+#### Account
 
 The class Account should be the bare minimum needed to hold the state information that models a bank account. In fact, it need only be a wrapper around an appropriate primitive type that represents the balance in the account. The constructor for ATMImplementation should create an Account object using the default constructor and store a reference to it.
 
-####ATMProxy
+#### ATMProxy
 
 Now, the client wants to make calls on the ATM, perhaps withdrawing some money or checking the balance, but, the client can't actually get a reference to the ATMImplementation. Instead it will operate on an ATMProxy that implements the ATM interface. As far as the client is concerned, the instance is an ATM. It doesn't care that the ATMProxy actually connects to a remote server process and delegates the ATM methods to the remote ATMImplementation.
 
@@ -120,7 +120,7 @@ The proxy doesn't actually hold any account data as part of its state. It simply
 
 To communicate with the server you will need to define a protocol, like the one used by the SimpleClient and the SimpleServer. The protocol enables the proxy to tell the server what it wants the server to do. And while the server is processing that request the proxy must wait for that response. Consider a simple String based protocol that includes the method to be executed and some String representation of any parameters for that method. Then have the proxy write the String messages directly onto the output stream obtained from the socket.
 
-####Server
+#### Server
 
 Develop a class Server that will host the ATMImplementation object. Server.main() should accept a port number as a command line parameter. This port is the port on which the Server will listen for client requests.
 
@@ -134,7 +134,7 @@ would tell the server to create a ServerSocket on port 7777.
 
 Server.main should instantiate an ATMImplementation and begin listening for requests. To prepare for requests, the Server must create a ServerSocket and then begin accepting incoming connections on that ServerSocket. When a request is received from the client, the Server should read in incoming message from the socket input stream, interpret the request based on the protocol defined above and then dispatch the request to the appropriate method of its ATMImplementation object. If a response is required, the Server must then form the appropriate response message and send it back to the caller over the socket output stream.
 
-####Client
+#### Client
 
 To drive you system, create the following Client class and include this exact class with your submission:
 
@@ -180,7 +180,7 @@ When invoking this client, specify the host and port of the server process as co
 C:\> java cscie55.hw4.Client localhost 7777
 ```
 
-####Demonstration
+#### Demonstration
 
 To demonstrate your system you will need to start two distinct processes.
 
@@ -210,7 +210,7 @@ Balance: 0.0
 
 Note: when you use the front end supplied in the jar file, your output will always show a balance of 0.0. What else would you expect from an ATM which has no Accounts?
 
-####JUnit and ant Requirements: 
+#### JUnit and ant Requirements: 
 
 Now comes the hard part. In addition to the ATMImplementation and Account classes that compise the back end of this application, you are required to write JUnit test classes for each of these classes:
 
